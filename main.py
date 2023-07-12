@@ -10,9 +10,15 @@ import base64
 import sys
 import json
 
-API_TOKEN = "5585997504:AAH6bwQxJFi6vprcHjkUwnQQ34wh6yBYUUs"
+with open('Config.json') as f:
+    config_data = json.load(f)
+
+
+bot_token = config_data.get('bot_token')
+print(bot_token)
+
 logging.basicConfig(level=logging.DEBUG)
-bot = Bot(token=API_TOKEN)
+bot = Bot(token=bot_token)
 dp = Dispatcher(bot)
 
 # DEF FOR EMOTICONS
@@ -79,7 +85,7 @@ async def motogp_handler(message: types.Message):
     print("motogp")
 
     # Call the API to get name and id country
-    api_url = "https://racingmike.com/api/v1.0/motogp-events?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023&sport=motogp"
+    api_url = "https://racingmike.com/api/v1.0/motogp-events?token=" + config_data.get('api_token') + "&year=2023&sport=motogp"
     response = requests.get(api_url)
     data = response.json()
 
@@ -114,7 +120,7 @@ async def event_result_handler(callback_query: types.CallbackQuery):
     event_id = session_
     category_id = "e8c110ad-64aa-4e8e-8a86-f2f152f6a942"
     # Call the API to get the sessions data
-    api_url = f"https://racingmike.com/api/v1.0/motogp-sessions?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&eventid={event_id}&categoryid={category_id}"
+    api_url = f"https://racingmike.com/api/v1.0/motogp-sessions?token=" + config_data.get('api_token') + "&eventid={event_id}&categoryid={category_id}"
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -161,7 +167,7 @@ async def session_result_handler(callback_query: types.CallbackQuery):
     category_id = "e8c110ad-64aa-4e8e-8a86-f2f152f6a942"
 
     # Call the API to get the classification data
-    api_url = f"https://racingmike.com/api/v1.0/motogp-full-results?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&eventid={event_id}&categoryid={category_id}&session={name_session}"
+    api_url = f"https://racingmike.com/api/v1.0/motogp-full-results?token=" + config_data.get('api_token') + "&eventid={event_id}&categoryid={category_id}&session={name_session}"
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -194,7 +200,7 @@ async def moto2_handler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get name and id country
-    api_url = "https://racingmike.com/api/v1.0/motogp-events?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023&sport=motogp"
+    api_url = "https://racingmike.com/api/v1.0/motogp-events?token=" + config_data.get('api_token') + "&year=2023&sport=motogp"
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -234,7 +240,7 @@ async def moto2_event_result_handler(callback_query: types.CallbackQuery):
     event_id = moto2_session_
     category_id = "549640b8-fd9c-4245-acfd-60e4bc38b25c"
     # Call the API to get the sessions data
-    api_url = f"https://racingmike.com/api/v1.0/motogp-sessions?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&eventid={event_id}&categoryid={category_id}"
+    api_url = f"https://racingmike.com/api/v1.0/motogp-sessions?token=" + config_data.get('api_token') + "&eventid={event_id}&categoryid={category_id}"
     response = requests.get(api_url)
     data = response.json()
 
@@ -279,7 +285,7 @@ async def moto2_session_result_handler(callback_query: types.CallbackQuery):
     category_id = "549640b8-fd9c-4245-acfd-60e4bc38b25c"
 
     # Call the API to get the classification data
-    api_url = f"https://racingmike.com/api/v1.0/motogp-full-results?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&eventid={moto2_event_}&categoryid={category_id}&session={name_session}"
+    api_url = f"https://racingmike.com/api/v1.0/motogp-full-results?token=" + config_data.get('api_token') + "&eventid={moto2_event_}&categoryid={category_id}&session={name_session}"
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -307,7 +313,7 @@ async def moto3_handler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get name and id country
-    api_url = "https://racingmike.com/api/v1.0/motogp-events?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023&sport=motogp"
+    api_url = "https://racingmike.com/api/v1.0/motogp-events?token=" + config_data.get('api_token') + "&year=2023&sport=motogp"
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -345,7 +351,7 @@ async def moto3_event_result_handler(callback_query: types.CallbackQuery):
     event_id = moto3_session_
     category_id = "549640b8-fd9c-4245-acfd-60e4bc38b25c"
     # Call the API to get the sessions data
-    api_url = f"https://racingmike.com/api/v1.0/motogp-sessions?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&eventid={event_id}&categoryid={category_id}"
+    api_url = f"https://racingmike.com/api/v1.0/motogp-sessions?token=" + config_data.get('api_token') + "&eventid={event_id}&categoryid={category_id}"
     response = requests.get(api_url)
     data = response.json()
 
@@ -388,7 +394,7 @@ async def moto3_event_result_handler(callback_query: types.CallbackQuery):
     event_id = standingmotogp_event_handler
     category_id = "549640b8-fd9c-4245-acfd-60e4bc38b25c"
     # Call the API to get the sessions data
-    api_url = f"https://racingmike.com/api/v1.0/motogp-sessions?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&eventid={event_id}&categoryid={category_id}"
+    api_url = f"https://racingmike.com/api/v1.0/motogp-sessions?token=" + config_data.get('api_token') + "&eventid={event_id}&categoryid={category_id}"
     response = requests.get(api_url)
     data = response.json()
 
@@ -434,7 +440,7 @@ async def moto3_session_result_handler(callback_query: types.CallbackQuery):
     category_id = "954f7e65-2ef2-4423-b949-4961cc603e45"
 
     # Call the API to get the classification data
-    api_url = f"https://racingmike.com/api/v1.0/motogp-full-results?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&eventid={moto3_event_}&categoryid={category_id}&session={name_session}"
+    api_url = f"https://racingmike.com/api/v1.0/motogp-full-results?token=" + config_data.get('api_token') + "&eventid={moto3_event_}&categoryid={category_id}&session={name_session}"
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -465,7 +471,7 @@ async def moto3_session_result_handler(callback_query: types.CallbackQuery):
 async def livetiming_event_handler(message: types.Message):
     await message.reply("Fetching data...")
     # Call the API to get the classification data
-    api_url = f"https://racingmike.com/api/v1.0/liveresult?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+    api_url = f"https://racingmike.com/api/v1.0/liveresult?token=" + config_data.get('api_token') + ""
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -500,7 +506,7 @@ async def session_result_handler(callback_query: types.CallbackQuery):
     category_id = "e8c110ad-64aa-4e8e-8a86-f2f152f6a942"
 
     # Call the API to get the classification data
-    api_url = f"https://racingmike.com/api/v1.0/motogpclassificationstotal?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&eventid={event_id}&categoryid={category_id}&sessionid={name_session}"
+    api_url = f"https://racingmike.com/api/v1.0/motogpclassificationstotal?token=" + config_data.get('api_token') + "&eventid={event_id}&categoryid={category_id}&sessionid={name_session}"
 
     print(api_url)
     response = requests.get(api_url)
@@ -539,7 +545,7 @@ async def f1_handler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get name and id country
-    api_url = "https://racingmike.com/api/v1.0/f1-circuits?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023"
+    api_url = "https://racingmike.com/api/v1.0/f1-circuits?token=" + config_data.get('api_token') + "&year=2023"
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -579,7 +585,7 @@ async def f1_event_result_handler(callback_query: types.CallbackQuery):
     #roundnumber = 9
     print(roundnumber)
     #sys.exit(0)
-    api_url = f"https://racingmike.com/api/v1.0/f1-result-races?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023&roundnumber={roundnumber}"
+    api_url = f"https://racingmike.com/api/v1.0/f1-result-races?token=" + config_data.get('api_token') + "&year=2023&roundnumber={roundnumber}"
     response = requests.get(api_url)
     data = response.json()
     if len(data) >= 1:
@@ -594,7 +600,7 @@ async def f1_event_result_handler(callback_query: types.CallbackQuery):
             fastestLap = session.get("fastestLap")
             fastestLapSpeed = session.get("fastestLapSpeed")
             points = session.get("points")
-            results += f"🥇{position} {flag} {fullname} {team} {time} Fastlap: {fastestLap} FastlapSpeed:{fastestLapSpeed} Points:{points}\n\n"
+            results += f"({position}) {flag} {fullname} {team} {time} \nFastlap: {fastestLap} \nFastlapSpeed:{fastestLapSpeed} \nPoints:{points}\n\n"
 
         # Process the data and send the results to the user
         #result = results.replace(null, "N/A")
@@ -611,7 +617,7 @@ async def f1_Qhandler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get name and id country
-    api_url = "https://racingmike.com/api/v1.0/f1-circuits?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023"
+    api_url = "https://racingmike.com/api/v1.0/f1-circuits?token=" + config_data.get('api_token') + "&year=2023"
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -647,7 +653,7 @@ async def f1_Shandler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get name and id country
-    api_url = "https://racingmike.com/api/v1.0/f1-circuits?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023"
+    api_url = "https://racingmike.com/api/v1.0/f1-circuits-sprint?token=" + config_data.get('api_token') + "&year=2023"
     print(api_url)
     response = requests.get(api_url)
     data = response.json()
@@ -688,7 +694,7 @@ async def f1_event_result_Qhandler(callback_query: types.CallbackQuery):
     # roundnumber = 9
     print(roundnumber)
     # sys.exit(0)
-    api_url = f"https://racingmike.com/api/v1.0/f1-result-qualifying?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023&roundnumber={roundnumber}"
+    api_url = f"https://racingmike.com/api/v1.0/f1-result-qualifying?token=" + config_data.get('api_token') + "&year=2023&roundnumber={roundnumber}"
     response = requests.get(api_url)
     data = response.json()
     if len(data) >= 1:
@@ -717,7 +723,7 @@ async def f1_event_result_Qhandler(callback_query: types.CallbackQuery):
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data.startswith("f1_event_result_sprint_"))
 async def f1_event_result_Shandler(callback_query: types.CallbackQuery):
-    print("cazpppppppppppppppppppppppppppppp")
+    print("ZZZZZZZZZZOOOO")
     print(callback_query.data)
     # sys.exit(0)
     f1_event_result_qualifying_ = callback_query.data.split("_")
@@ -726,13 +732,15 @@ async def f1_event_result_Shandler(callback_query: types.CallbackQuery):
     # roundnumber = 9
     print(roundnumber)
     # sys.exit(0)
-    api_url = f"https://racingmike.com/api/v1.0/f1-result-sprint?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023&roundnumber={roundnumber}"
+    api_url = f"https://racingmike.com/api/v1.0/f1-result-sprint?token=" + config_data.get('api_token') + "&year=2023&roundnumber={roundnumber}"
     response = requests.get(api_url)
     data = response.json()
-    if len(data) >= 1 and data[0]['id'] != 'NO DATA':
+    print(data)
+    if len(data) >= 1 :
         results = ""
         for session in data:
             id = session.get("id")
+            print(id)
             fullname = session.get("fullname", "")
             position = session.get("position")
             flag = session.get("flag")
@@ -740,12 +748,17 @@ async def f1_event_result_Shandler(callback_query: types.CallbackQuery):
             time = session.get("time")
             fastestLap = session.get("fastestLap")
             points = session.get("points")
-            results += f"🥇{position} {flag} {fullname} {team} {time} Fastlap: {fastestLap} Points:{points}\n\n"
+            results += f"{position} {flag} {fullname} {team} {time} \nFastlap: {fastestLap} \nPoints:{points}\n\n"
 
         # Process the data and send the results to the user
         # result = results.replace(null, "N/A")
-        await callback_query.answer("Displaying the event results")
-        await callback_query.message.reply(results)
+        print("IO SONO " +str(results))
+        if id == None:
+            await callback_query.answer("Displaying the event results")
+            await callback_query.message.reply(results)
+        else:
+            await callback_query.message.reply(
+                 "❌ No data for Spring Race! If this session only finished recently, please try again in a few minutes")
     else:
         await callback_query.message.reply(
             "❌ No data for Spring Race! If this session only finished recently, please try again in a few minutes")
@@ -757,7 +770,7 @@ async def f1_standing_driver_handler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get the F1 standings data
-    api_url = "https://racingmike.com/api/v1.0/f1-driverstandings?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023"
+    api_url = "https://racingmike.com/api/v1.0/f1-driverstandings?token=" + config_data.get('api_token') + "&year=2023"
     response = requests.get(api_url)
     data = response.json()
 
@@ -771,7 +784,7 @@ async def f1_standing_driver_handler(message: types.Message):
         nationality = driver.get("nationality")
         url = driver.get("url")
 
-        driver_info = f"{pos}. {forename} {surname} ({nationality}) - {points} points\n"
+        driver_info = f"{pos}. 👨{forename} {surname} ({nationality}) 🥇{points} points\n"
         standings_msg += driver_info
 
     # Send the F1 standings message to the Telegram chat
@@ -789,7 +802,7 @@ async def f1_standing_constructor_handler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get the F1 standings data
-    api_url = "https://racingmike.com/api/v1.0/f1-constructorstandings?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023"
+    api_url = "https://racingmike.com/api/v1.0/f1-constructorstandings?token=" + config_data.get('api_token') + "&year=2023"
     response = requests.get(api_url)
     data = response.json()
 
@@ -802,7 +815,7 @@ async def f1_standing_constructor_handler(message: types.Message):
         points = driver.get("points")
         url = driver.get("url")
 
-        driver_info = f"{pos}. {constructorName} ({nationality}) - {points} points\n"
+        driver_info = f"{pos} 🏎️{constructorName} ({nationality}) 🥇{points} points\n"
         standings_msg += driver_info
 
     # Send the F1 standings message to the Telegram chat
@@ -820,7 +833,7 @@ async def f1_standing_moto2_handler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get the F1 standings data
-    api_url = "https://racingmike.com/api/v1.0/motogp-world-standing-riders?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023&categoryid=549640b8-fd9c-4245-acfd-60e4bc38b25c"
+    api_url = "https://racingmike.com/api/v1.0/motogp-world-standing-riders?token=" + config_data.get('api_token') + "&year=2023&categoryid=549640b8-fd9c-4245-acfd-60e4bc38b25c"
     response = requests.get(api_url)
     data = response.json()
 
@@ -853,7 +866,7 @@ async def f1_standing_moto3_handler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get the F1 standings data
-    api_url = "https://racingmike.com/api/v1.0/motogp-world-standing-riders?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023&categoryid=954f7e65-2ef2-4423-b949-4961cc603e45"
+    api_url = "https://racingmike.com/api/v1.0/motogp-world-standing-riders?token=" + config_data.get('api_token') + "&year=2023&categoryid=954f7e65-2ef2-4423-b949-4961cc603e45"
     response = requests.get(api_url)
     data = response.json()
 
@@ -885,7 +898,7 @@ async def f1_standing_motogp_handler(message: types.Message):
     await message.reply("Fetching data...")
 
     # Call the API to get the F1 standings data
-    api_url = "https://racingmike.com/api/v1.0/motogp-world-standing-riders?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&year=2023&categoryid=e8c110ad-64aa-4e8e-8a86-f2f152f6a942"
+    api_url = "https://racingmike.com/api/v1.0/motogp-world-standing-riders?token=" + config_data.get('api_token') + "&year=2023&categoryid=e8c110ad-64aa-4e8e-8a86-f2f152f6a942"
     response = requests.get(api_url)
     data = response.json()
 
